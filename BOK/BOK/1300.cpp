@@ -1,28 +1,21 @@
 #include <stdio.h>
+
 int main() {
-	int N = 0;
-	int k;
-	scanf("%d", &N);
-	scanf("%d", &k);
-	int arr[10 ^ 5][10 ^ 5] = { 0, };
-	int result[100] = { 0, };
-	for (int y=0; y < N;  y++) {
-		for (int x=0; x < N; x++) {
-			printf("%d ", (y + 1)*(x + 1));
+	int N, K;
+	scanf("%d %d", &N, &K);
 
+	int left = 1, right = K, ans;
+	while (left <= right) {
+		long long cnt = 0; 
+		int mid = (left + right) / 2;
+		for (int i = 1; i <= N; i++) {
+			if (mid / i > N) cnt += N;
+			else cnt += mid / i;
 		}
-		printf("\n");
+		if (cnt < K) left = mid + 1;
+		else ans = mid, right = mid - 1;
 	}
+	printf("%d", ans);
 
-	int anw;
-	for (int i = 0; i < sizeof(result)/4; i++) {
-		if (k) {
-			k -= result[i];
-		}
-		else {
-			break;
-		}
-		anw = i;
-	}
-	printf("%d", anw);
+	return 0;
 }
